@@ -92,12 +92,6 @@ Todos os formatos registram RX e TX com timestamp em milissegundos.
 - Python 3
 - pyserial instalado no ambiente
 
-### 6.2 Rodar monitor standalone
-Comando:
-
-```bash
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe main.py
-```
 
 Fluxo esperado:
 1. configurar porta e parametros
@@ -105,27 +99,11 @@ Fluxo esperado:
 3. digitar comandos em TX>
 4. encerrar com /exit
 
-### 6.3 Rodar simulacao
-Comando:
-
-```bash
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe simulate_serial.py
-```
-
 Saida esperada:
 - eventos RX e TX no console
 - arquivo de log simulado (jsonl)
 - resumo final com contagem de eventos
 
-### 6.4 Rodar testes
-Comando:
-
-```bash
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe -m unittest discover -s tests -p "test_*.py" -v
-```
-
-Tambem disponivel no VS Code pela task:
-- Run Serial Monitor Tests
 
 ## 7. Integracao em Programa Maior
 Exemplo de abordagem:
@@ -150,34 +128,4 @@ Cobertura atual da suite automatizada:
 
 Resultado mais recente: testes executados com sucesso (6/6 ok).
 
-## 9. Decisoes de Escopo (Atuais)
-Itens deliberadamente adiados:
-- parser plugavel de payload
-- exportador de metricas
-
-Motivo: nao sao necessarios no escopo atual, mas estao mapeados para retomada futura.
-
-## 10. Troubleshooting Rapido
-- Nao vejo tasks.json:
-  verificar se a pasta .vscode esta visivel no Explorer.
-- Nao tenho hardware agora:
-  usar [simulate_serial.py](simulate_serial.py) para validar pipeline completo.
-- Nao chegam linhas completas:
-  confirmar delimitador \n no dispositivo e revisar configuracao serial.
-- Arquivo de log nao aparece:
-  conferir permissao de escrita e caminho informado no prompt.
-
-## 11. Historico Resumido de Evolucao
-1. fortalecimento de leitura serial e encerramento
-2. console TX com comandos de controle
-3. persistencia multi-formato (text/csv/json)
-4. separacao arquitetura CLI vs biblioteca
-5. simulacao sem hardware para validacao
-6. testes automatizados de regressao
-7. documentacao consolidada para continuidade
-
-## 12. Proximos Passos Recomendados
-1. Manter rotina de testes a cada mudanca no monitor
-2. Definir formato padrao de log por ambiente (dev/prod)
-3. Retomar parser plugavel quando surgir necessidade de semantica de payload
-4. Retomar metricas quando houver demanda de observabilidade
+#
