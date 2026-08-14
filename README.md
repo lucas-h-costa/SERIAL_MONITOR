@@ -1,13 +1,11 @@
-# SERIAL_MONITOR - Documentacao Completa do Produto
-
-Data de referencia: 2026-08-14
+# SERIAL_MONITOR
 
 ## 1. Visao Geral
-SERIAL_MONITOR e um monitor serial para Windows pensado para dois cenarios:
+SERIAL_MONITOR  é um monitor serial para Windows pensado para dois cenários:
 - uso direto no terminal (modo standalone), com leitura RX e envio TX
 - uso como biblioteca Python, para integrar captura serial em sistemas maiores
 
-O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de desenvolvimento para automacao e analise.
+O projeto foi evoluido para servir tanto como debug rapido de bancada quanto como base de desenvolvimento para automacao e analise.
 
 ## 2. Objetivos do Produto
 - Facilitar captura serial com configuracao simples
@@ -125,7 +123,5 @@ Cobertura atual da suite automatizada:
 - conversao de payload nao ASCII para HEX
 - escrita JSONL valida
 - escrita CSV com cabecalho e linhas
-
-Resultado mais recente: testes executados com sucesso (6/6 ok).
 
 #
