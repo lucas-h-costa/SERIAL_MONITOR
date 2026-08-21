@@ -1,4 +1,6 @@
-# SERIAL_MONITOR
+# SERIAL_SPY
+
+## Versao atual: 0.3.1 Beta
 
 Monitor serial para Windows com quatro formas de uso: terminal, interface grafica, integracao por API e testes/simulacao sem hardware.
 
