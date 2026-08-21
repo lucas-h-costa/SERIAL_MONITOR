@@ -188,8 +188,4 @@ Em `.vscode/tasks.json` existem tarefas para:
 
 Parser plugavel de payload e exportador de metricas foram deliberadamente adiados porque nao sao necessarios no escopo atual. A arquitetura de eventos, callbacks e fila permite adicionar esses recursos futuramente sem acoplar a logica de analise ao terminal ou a GUI.
 
-## Documentacao adicional
 
-- `CHANGELOG_SERIAL_MONITOR.md`: historico detalhado local, mantido fora do repositorio por enquanto;
-- `DOCUMENTACAO_SERIAL_MONITOR.txt`: versao em texto puro;
-- `notes.md`: notas resumidas para continuidade do projeto.
