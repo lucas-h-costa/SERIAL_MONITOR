@@ -303,8 +303,12 @@ class SerialMonitor:
             print("Operacao encerrada.")
 
 
+def get_serial_ports():
+    return sorted(list_ports.comports(), key=lambda p: p.device)
+
+
 def list_serial_ports():
-    ports = sorted(list_ports.comports(), key=lambda p: p.device)
+    ports = get_serial_ports()
     if not ports:
         print("Nenhuma porta serial detectada automaticamente.")
         return

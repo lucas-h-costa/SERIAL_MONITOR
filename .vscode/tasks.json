@@ -17,6 +17,15 @@
 			],
 			"isBackground": false,
 			"group": "test"
+		},
+		{
+			"label": "Run Serial Monitor GUI",
+			"type": "shell",
+			"command": "c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe",
+			"args": [
+				"gui.py"
+			],
+			"isBackground": false
 		}
 	]
 }

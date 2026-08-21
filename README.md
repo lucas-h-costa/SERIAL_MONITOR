@@ -1,11 +1,13 @@
 # SERIAL_MONITOR - Documentacao Completa do Produto
 
-Data de referencia: 2026-08-14
+Data de referencia: 2026-08-21
 
 ## 1. Visao Geral
-SERIAL_MONITOR e um monitor serial para Windows pensado para dois cenarios:
+SERIAL_MONITOR e um monitor serial para Windows pensado para quatro cenarios:
 - uso direto no terminal (modo standalone), com leitura RX e envio TX
+- uso por interface grafica simples
 - uso como biblioteca Python, para integrar captura serial em sistemas maiores
+- uso em simulacao e testes sem hardware
 
 O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de desenvolvimento para automacao e analise.
 
@@ -18,10 +20,11 @@ O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de 
 
 ## 3. Estrutura Atual do Projeto
 - [main.py](main.py): entrada standalone (CLI interativa)
+- [gui.py](gui.py): interface grafica Tkinter
 - [serial_monitor.py](serial_monitor.py): biblioteca central do monitor
 - [simulate_serial.py](simulate_serial.py): simulacao de dados sem hardware
 - [tests/test_serial_monitor.py](tests/test_serial_monitor.py): testes automatizados
-- [.vscode/tasks.json](.vscode/tasks.json): tarefa pronta para rodar testes no VS Code
+- [.vscode/tasks.json](.vscode/tasks.json): tarefas para rodar testes e GUI no VS Code
 - [notes.md](notes.md): notas de contexto e decisoes
 
 ## 4. Arquitetura Tecnica
@@ -36,7 +39,18 @@ No modo standalone, [main.py](main.py) guia o usuario por prompts:
 
 Depois da conexao, o console entra em modo interativo para envio de comandos.
 
-### 4.2 Modo Biblioteca
+### 4.2 Modo Grafico
+[gui.py](gui.py) oferece uma interface Tkinter para uso visual do monitor. A porta serial e escolhida por uma lista suspensa preenchida com as portas detectadas no computador. O botao `Atualizar portas` refaz a busca sem reiniciar a aplicacao.
+
+O modo grafico permite configurar a comunicacao, conectar e desconectar, acompanhar RX/TX, enviar texto ou HEX, escolher o log, controlar CRLF e limpar somente a area visual.
+
+### 4.3 Modo Integracao por API
+[serial_monitor.py](serial_monitor.py) concentra a regra de comunicacao e pode ser importado por outro programa. A aplicacao consumidora pode escolher callback ou fila de eventos, sem depender do terminal ou da GUI.
+
+### 4.4 Modo Teste e Simulacao
+[simulate_serial.py](simulate_serial.py) exercita o pipeline sem porta fisica, gerando RX/TX, callbacks, logs e resumo de eventos. A suite em [tests/test_serial_monitor.py](tests/test_serial_monitor.py) usa uma serial fake para testar o componente de forma deterministica.
+
+### 4.5 Biblioteca e API
 [serial_monitor.py](serial_monitor.py) expoe a classe SerialMonitor para integracao em qualquer app Python.
 
 Recursos principais da API:
@@ -46,7 +60,7 @@ Recursos principais da API:
 - metodos de envio TX texto e HEX
 - modo simulacao sem porta serial real
 
-### 4.3 Modelo de Evento
+### 4.6 Modelo de Evento
 Cada evento de RX ou TX e representado por SerialEvent, com campos:
 - timestamp_iso
 - timestamp_ms
@@ -86,6 +100,15 @@ Todos os formatos registram RX e TX com timestamp em milissegundos.
 - persistencia de log
 - contagem final de eventos
 
+### 5.5 Interface Grafica
+Para iniciar a interface:
+
+```bash
+c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+```
+
+Tambem e possivel usar a task `Run Serial Monitor GUI` no VS Code.
+
 ## 6. Como Executar
 
 ### 6.1 Requisitos
@@ -117,7 +140,12 @@ Saida esperada:
 - arquivo de log simulado (jsonl)
 - resumo final com contagem de eventos
 
-### 6.4 Rodar testes
+### 6.4 Rodar interface grafica
+```bash
+c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+```
+
+### 6.5 Rodar testes unitarios
 Comando:
 
 ```bash
@@ -139,8 +167,10 @@ Pontos de design importantes:
 - stop fecha thread, porta e arquivo de log
 - fila de eventos desacopla captura e processamento
 
-## 8. Qualidade e Testes
-Cobertura atual da suite automatizada:
+## 8. Testes Unitarios
+Os testes sao executados sem hardware usando `unittest` e uma classe `FakeSerial`.
+
+### 8.1 O que e validado
 - start/stop com serial fake
 - envio TX texto com CRLF
 - buffering RX com fragmentacao
@@ -148,7 +178,15 @@ Cobertura atual da suite automatizada:
 - escrita JSONL valida
 - escrita CSV com cabecalho e linhas
 
-Resultado mais recente: testes executados com sucesso (6/6 ok).
+### 8.2 Como executar
+```bash
+c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe -m unittest discover -s tests -p "test_*.py" -v
+```
+
+Resultado mais recente: 6 testes executados com sucesso (6/6 ok).
+
+### 8.3 Limites atuais
+Os testes nao substituem uma verificacao com equipamento real. O teste fisico ainda deve confirmar porta, cabeamento, baud rate, paridade, stop bits e comportamento eletrico do dispositivo.
 
 ## 9. Decisoes de Escopo (Atuais)
 Itens deliberadamente adiados:

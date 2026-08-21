@@ -1,11 +1,13 @@
 # SERIAL_MONITOR - Documentacao Completa do Produto
 
-Data de referencia: 2026-08-14
+Data de referencia: 2026-08-21
 
 ## 1. Visao Geral
-SERIAL_MONITOR e um monitor serial para Windows pensado para dois cenarios:
+SERIAL_MONITOR e um monitor serial para Windows pensado para quatro cenarios:
 - uso direto no terminal (modo standalone), com leitura RX e envio TX
+- uso por interface grafica simples
 - uso como biblioteca Python, para integrar captura serial em sistemas maiores
+- uso em simulacao e testes sem hardware
 
 O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de desenvolvimento para automacao e analise.
 
@@ -18,6 +20,7 @@ O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de 
 
 ## 3. Estrutura Atual do Projeto
 - [main.py](main.py): entrada standalone (CLI interativa)
+- [gui.py](gui.py): interface grafica Tkinter
 - [serial_monitor.py](serial_monitor.py): biblioteca central do monitor
 - [simulate_serial.py](simulate_serial.py): simulacao de dados sem hardware
 - [tests/test_serial_monitor.py](tests/test_serial_monitor.py): testes automatizados
@@ -35,6 +38,15 @@ No modo standalone, [main.py](main.py) guia o usuario por prompts:
 - opcao de CRLF automatico em TX
 
 Depois da conexao, o console entra em modo interativo para envio de comandos.
+
+### 4.2 Modo Grafico
+A GUI em [gui.py](gui.py) usa Tkinter e a mesma biblioteca central. O campo Porta e uma lista suspensa preenchida com as portas detectadas pelo computador. O botao Atualizar portas refaz a busca e preserva a selecao quando ela ainda existe.
+
+### 4.3 Modo Integracao por API
+Aplicacoes externas importam [serial_monitor.py](serial_monitor.py) e recebem eventos por callback ou fila, sem depender de interface visual.
+
+### 4.4 Modo Teste e Simulacao
+[simulate_serial.py](simulate_serial.py) gera eventos sem hardware. [tests/test_serial_monitor.py](tests/test_serial_monitor.py) valida o componente usando serial fake.
 
 ### 4.2 Modo Biblioteca
 [serial_monitor.py](serial_monitor.py) expoe a classe SerialMonitor para integracao em qualquer app Python.
@@ -54,6 +66,20 @@ Cada evento de RX ou TX e representado por SerialEvent, com campos:
 - payload
 
 Esse formato padronizado reduz acoplamento com parsing textual e facilita evolucao.
+
+### 4.4 Interface Grafica
+[gui.py](gui.py) fornece uma interface Tkinter simples sobre a mesma classe SerialMonitor.
+Ela permite:
+- escolher a porta em uma lista das portas detectadas no computador
+- selecionar baud, bits, paridade e stop bits
+- atualizar a lista de portas detectadas
+- conectar e desconectar
+- visualizar RX e TX em uma area de captura
+- enviar texto ou bytes HEX
+- escolher arquivo e formato de log
+- limpar a area visual sem apagar o arquivo de log
+
+A GUI nao acessa widgets a partir da thread de leitura. Ela consulta a fila de eventos periodicamente com `after()`, mantendo a interface responsiva e evitando problemas de thread do Tkinter.
 
 ## 5. Funcionalidades Implementadas
 
@@ -86,6 +112,16 @@ Todos os formatos registram RX e TX com timestamp em milissegundos.
 - persistencia de log
 - contagem final de eventos
 
+### 5.5 Interface Grafica
+Para iniciar a GUI:
+
+```bash
+c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+```
+
+Tambem e possivel executar a task `Run Serial Monitor GUI` no VS Code.
+O modo grafico e uma camada de apresentacao: captura, envio e logs continuam sob responsabilidade da biblioteca.
+
 ## 6. Como Executar
 
 ### 6.1 Requisitos
@@ -117,7 +153,14 @@ Saida esperada:
 - arquivo de log simulado (jsonl)
 - resumo final com contagem de eventos
 
-### 6.4 Rodar testes
+### 6.4 Rodar interface grafica
+Comando:
+
+```bash
+c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+```
+
+### 6.5 Rodar testes
 Comando:
 
 ```bash
@@ -175,6 +218,7 @@ Motivo: nao sao necessarios no escopo atual, mas estao mapeados para retomada fu
 5. simulacao sem hardware para validacao
 6. testes automatizados de regressao
 7. documentacao consolidada para continuidade
+8. interface grafica simples sobre a API
 
 ## 12. Proximos Passos Recomendados
 1. Manter rotina de testes a cada mudanca no monitor

@@ -1,7 +1,7 @@
 import sys
 import serial
-
 from serial_monitor import SerialMonitor, list_serial_ports
+
 
 
 def build_monitor_from_prompts():
@@ -48,7 +48,6 @@ def build_monitor_from_prompts():
         parity = serial.PARITY_ODD
     else:
         parity = serial.PARITY_NONE
-
     stop_input = input("Digite os bits de parada (1, 1.5, 2) [padrao 1]: ").strip()
     if stop_input == '1.5':
         stopbits = serial.STOPBITS_ONE_POINT_FIVE
