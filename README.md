@@ -1,15 +1,22 @@
+<<<<<<< HEAD
 # SERIAL_MONITOR - Documentacao Completa do Produto
 
 Data de referencia: 2026-08-21
 
 ## 1. Visao Geral
 SERIAL_MONITOR e um monitor serial para Windows pensado para quatro cenarios:
+=======
+# SERIAL_MONITOR
+
+## 1. Visao Geral
+SERIAL_MONITOR  é um monitor serial para Windows pensado para dois cenários:
+>>>>>>> bfb1e0e4f7681f6a62ac66a984e322706a71dc49
 - uso direto no terminal (modo standalone), com leitura RX e envio TX
 - uso por interface grafica simples
 - uso como biblioteca Python, para integrar captura serial em sistemas maiores
 - uso em simulacao e testes sem hardware
 
-O projeto foi evoluido para servir tanto debug rapido de bancada quanto base de desenvolvimento para automacao e analise.
+O projeto foi evoluido para servir tanto como debug rapido de bancada quanto como base de desenvolvimento para automacao e analise.
 
 ## 2. Objetivos do Produto
 - Facilitar captura serial com configuracao simples
@@ -115,12 +122,6 @@ Tambem e possivel usar a task `Run Serial Monitor GUI` no VS Code.
 - Python 3
 - pyserial instalado no ambiente
 
-### 6.2 Rodar monitor standalone
-Comando:
-
-```bash
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe main.py
-```
 
 Fluxo esperado:
 1. configurar porta e parametros
@@ -128,18 +129,12 @@ Fluxo esperado:
 3. digitar comandos em TX>
 4. encerrar com /exit
 
-### 6.3 Rodar simulacao
-Comando:
-
-```bash
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe simulate_serial.py
-```
-
 Saida esperada:
 - eventos RX e TX no console
 - arquivo de log simulado (jsonl)
 - resumo final com contagem de eventos
 
+<<<<<<< HEAD
 ### 6.4 Rodar interface grafica
 ```bash
 c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
@@ -154,6 +149,8 @@ c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe -m unittest discover -s t
 
 Tambem disponivel no VS Code pela task:
 - Run Serial Monitor Tests
+=======
+>>>>>>> bfb1e0e4f7681f6a62ac66a984e322706a71dc49
 
 ## 7. Integracao em Programa Maior
 Exemplo de abordagem:
@@ -178,6 +175,7 @@ Os testes sao executados sem hardware usando `unittest` e uma classe `FakeSerial
 - escrita JSONL valida
 - escrita CSV com cabecalho e linhas
 
+<<<<<<< HEAD
 ### 8.2 Como executar
 ```bash
 c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe -m unittest discover -s tests -p "test_*.py" -v
@@ -219,3 +217,6 @@ Motivo: nao sao necessarios no escopo atual, mas estao mapeados para retomada fu
 2. Definir formato padrao de log por ambiente (dev/prod)
 3. Retomar parser plugavel quando surgir necessidade de semantica de payload
 4. Retomar metricas quando houver demanda de observabilidade
+=======
+#
+>>>>>>> bfb1e0e4f7681f6a62ac66a984e322706a71dc49
