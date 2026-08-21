@@ -117,7 +117,7 @@ simulate_serial.py gera eventos sinteticos RX/TX para validar fluxo completo:
 
 5.5) Interface Grafica
 Para iniciar:
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+python gui.py
 
 Tambem e possivel executar a task Run Serial Monitor GUI no VS Code.
 
@@ -129,7 +129,7 @@ Tambem e possivel executar a task Run Serial Monitor GUI no VS Code.
 
 6.2) Rodar monitor standalone
 Comando:
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe main.py
+python main.py
 
 Fluxo esperado:
 1. configurar porta e parametros
@@ -139,7 +139,7 @@ Fluxo esperado:
 
 6.3) Rodar simulacao
 Comando:
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe simulate_serial.py
+python simulate_serial.py
 
 Saida esperada:
 - eventos RX e TX no console
@@ -148,11 +148,11 @@ Saida esperada:
 
 6.4) Rodar interface grafica
 Comando:
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe gui.py
+python gui.py
 
 6.5) Rodar testes
 Comando:
-c:/Users/lucas/SERIAL_MONITOR/.venv/Scripts/python.exe -m unittest discover -s tests -p "test_*.py" -v
+python -m unittest discover -s tests -p "test_*.py" -v
 
 Tambem disponivel no VS Code pela task:
 - Run Serial Monitor Tests
